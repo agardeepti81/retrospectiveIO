@@ -4,7 +4,7 @@ import PublicNote from "./components/PublicNote";
 import PrivateNote from "./components/PrivateNote";
 import StartPage from "./components/StartPage";
 
-const URL = "wss://y5j2cpbimj.execute-api.us-east-2.amazonaws.com/production"
+const URL = "ws://localhost:8080";
 
 const App = () => {
   const socket = useRef(null);
@@ -15,8 +15,10 @@ const App = () => {
 
   const onSocketOpen = useCallback((username) => {
     setIsConnected(true);
-    setIsStartPage(false);
-    socket.current?.send(JSON.stringify({ action: '$default', useFunction : 'setName', name: username}));
+    socket.current?.send(JSON.stringify({
+      action: "setName",
+      name: username
+    }))
   }, []);
 
   const onConnectApp = (username) => {
@@ -25,42 +27,30 @@ const App = () => {
  
   const onSocketMessage = useCallback((dataStr) => {
     const data = JSON.parse(dataStr);
-    if(data.members){
-      setMembers(data.members);
-    }
-    else if(data.notes){
-      setNotes(data.notes);
-    }
-    else if(data.newMember){
-      let newMembers = members;
-      newMembers.push(data.newMember)
-      setMembers(newMembers);
-    }
-    else if(data.newNote)
-    {
-      let newNotes = notes;
-      newNotes.push(data.newNote);
-      setNotes(newNotes);
-    }
-    else if(data.deleteMember)
-    {
-      let updateMembers = members;
-      let deleteMemberIndex = updateMembers.indexOf(data.deleteMember);
-      if (deleteMemberIndex !== -1) {
-          updateMembers.splice(deleteMemberIndex, 1);
-      }
-      setMembers(updateMembers);
-    }
-    else if(data.alertMessage)
-    {
-      alert(data.alertMessage);
+    switch(data?.type){
+      case "initialData":
+        setMembers(data.members);
+        setNotes(data.notes);
+        setIsStartPage(false);
+        break;
+      case "newMember":
+        let newMembers = members;
+        debugger;
+        console.log(newMembers);
+        newMembers.push(data.memberInfo);
+        console.log(newMembers);
+        setMembers(newMembers);
+        alert(`${data.memberInfo.name} has joined the session`);
+        break;
+      default:
+        console.log(data);
     }
   }, []);
 
   const onConnect = useCallback((username) => {
     if (socket.current?.readyState !== WebSocket.OPEN) {
       socket.current = new WebSocket(URL);
-      socket.current.addEventListener('open', () => onSocketOpen(username));
+      socket.current.addEventListener('open',() => onSocketOpen(username));
       socket.current.addEventListener('message', (event) => {
         onSocketMessage(event.data);
       });
@@ -80,6 +70,7 @@ const App = () => {
 
   console.log(members);
   console.log(notes);
+  
   return (
     <div className="App">
       {isStartPage ? (
@@ -87,9 +78,9 @@ const App = () => {
         onConnect = {onConnectApp}/>
       ) : (
         <div>
-          <PublicNote notes={notes} />
-          <PrivateNote onSend = {sendNote}/>
-          {members.map(i => <span>{i}</span>)}
+          {/* <PublicNote notes={notes} /> */}
+          <PrivateNote onSend = {sendNote} notes={notes}/>
+          {members.map(member => <span>{member.name}</span>)}
         </div>
       )}
     </div>

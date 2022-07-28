@@ -11,14 +11,24 @@ class PrivateNote extends Component {
     });
   };
 
-//   DeleteText = (event) => {
-//     this.setState({
-//         note: "",
-//       });
-//   }
+  DeleteText = (event) => {
+    this.setState({
+        note: "",
+      });
+  }
 
   render() {
     return (
+      <div>
+      <div id="publicNotes">
+        <h4>Public Note</h4>
+        {this.props.notes.map((note,i) => (
+          <div key = {i}>
+            <div>{note.uid} : {note.note}</div>
+          </div>
+        ))}
+      </div>
+
       <div id="privateNote">
         <h4>Private Note</h4>
         <textarea
@@ -31,7 +41,8 @@ class PrivateNote extends Component {
         />
         <br></br>
         <button onClick={() => this.props.onSend(this.state.note)}>Send</button>
-        <button >Clear</button>
+        <button onClick={this.DeleteText} >Clear</button>
+      </div>
       </div>
     );
   }

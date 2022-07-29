@@ -11,7 +11,7 @@ class PrivateNote extends Component {
     });
   };
 
-  DeleteText = (event) => {
+  deleteText = (event) => {
     this.setState({
         note: "",
       });
@@ -41,7 +41,7 @@ class PrivateNote extends Component {
         />
         <br></br>
         <button onClick={() => this.props.onSend(this.state.note)}>Send</button>
-        <button onClick={this.DeleteText} >Clear</button>
+        <button onClick={this.deleteText} >Clear</button>
       </div>
       </div>
     );

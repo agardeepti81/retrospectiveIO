@@ -15,6 +15,17 @@ class App extends Component {
     notes: [],
   };
 
+  // componentDidMount = () => {
+  //   console.log(this.state.socket);
+  //   if(this.state.socket!== null && this.state.socket?.readyState !== WebSocket.OPEN){
+  //     alert("Session ended. You can connect again");
+  //   }
+  // }
+
+  onSocketClose = () => {
+    alert("Session ended. You can connect again");
+  }
+
   onConnectApp = (username) => {
     this.onConnect(username);
   };
@@ -28,13 +39,14 @@ class App extends Component {
       this.state.socket.addEventListener("message", (event) => {
         this.onSocketMessage(event.data);
       });
+      this.state.socket.addEventListener("close", () => this.onSocketClose());
     }
   };
 
   onSocketOpen = (username) => {
     this.setState({
-      isConnected: true
-    })
+      isConnected: true,
+    });
     this.state.socket?.send(
       JSON.stringify({
         action: "setName",
@@ -50,8 +62,8 @@ class App extends Component {
         this.setState({
           members: data.members,
           notes: data.notes,
-          isStartPage: false
-        })
+          isStartPage: false,
+        });
         break;
       case "newMember":
         let newMembers = this.state.members;
@@ -59,8 +71,8 @@ class App extends Component {
         newMembers.push(data.memberInfo);
         console.log(newMembers);
         this.setState({
-          members: newMembers
-        })
+          members: newMembers,
+        });
         alert(`${data.memberInfo.name} has joined the session`);
         break;
       case "newNote":
@@ -69,15 +81,17 @@ class App extends Component {
         newNotes.push(data.note);
         console.log(newNotes);
         this.setState({
-          notes: newNotes
-        })
+          notes: newNotes,
+        });
         break;
 
       case "memberLeft":
         alert(data.uid + " has left the session");
         this.setState({
-          members: this.state.members.filter(member => member.uid !== data.uid)
-        })
+          members: this.state.members.filter(
+            (member) => member.uid !== data.uid
+          ),
+        });
         break;
 
       default:
@@ -101,8 +115,8 @@ class App extends Component {
           <StartPage onConnect={this.onConnectApp} />
         ) : (
           <div>
-            {/* <PublicNote notes={notes} /> */}
-            <PrivateNote onSend={this.sendNote} notes={this.state.notes} />
+            <PublicNote notes={this.state.notes} />
+            <PrivateNote onSend={this.sendNote} />
             {this.state.members.map((member) => (
               <span>{member.name}</span>
             ))}
@@ -115,85 +129,3 @@ class App extends Component {
 
 export default App;
 
-// const App = () => {
-//   const socket = useRef(null);
-//   const [isStartPage, setIsStartPage] = useState(true);
-//   const [isConnected, setIsConnected] = useState(false);
-//   const [members, setMembers] = useState([]);
-//   const [notes, setNotes] = useState([]);
-
-//   const onSocketOpen = useCallback((username) => {
-//     setIsConnected(true);
-//     socket.current?.send(JSON.stringify({
-//       action: "setName",
-//       name: username
-//     }))
-//   }, []);
-
-//   const onConnectApp = (username) => {
-//     onConnect(username);
-//   }
-
-//   const onSocketMessage = useCallback((dataStr) => {
-//     const data = JSON.parse(dataStr);
-//     switch(data?.type){
-//       case "initialData":
-//         setMembers(data.members);
-//         setNotes(data.notes);
-//         setIsStartPage(false);
-//         break;
-//       case "newMember":
-//         let newMembers = members;
-//         debugger;
-//         console.log(newMembers);
-//         newMembers.push(data.memberInfo);
-//         console.log(newMembers);
-//         setMembers(newMembers);
-//         alert(`${data.memberInfo.name} has joined the session`);
-//         break;
-//       default:
-//         console.log(data);
-//     }
-//   }, []);
-
-//   const onConnect = useCallback((username) => {
-//     if (socket.current?.readyState !== WebSocket.OPEN) {
-//       socket.current = new WebSocket(URL);
-//       socket.current.addEventListener('open',() => onSocketOpen(username));
-//       socket.current.addEventListener('message', (event) => {
-//         onSocketMessage(event.data);
-//       });
-//     }
-//   }, []);
-
-//   const sendNote = (newNote) =>
-//   {
-//     socket.current?.send(JSON.stringify({ action: '$default', useFunction : 'addPublicNote', note: newNote}));
-//   }
-
-//   useEffect(() => {
-//     return () => {
-//       socket.current?.close();
-//     };
-//   }, []);
-
-//   console.log(members);
-//   console.log(notes);
-
-//   return (
-//     <div className="App">
-//       {isStartPage ? (
-//         <StartPage
-//         onConnect = {onConnectApp}/>
-//       ) : (
-//         <div>
-//           {/* <PublicNote notes={notes} /> */}
-//           <PrivateNote onSend = {sendNote} notes={notes}/>
-//           {members.map(member => <span>{member.name}</span>)}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default App;

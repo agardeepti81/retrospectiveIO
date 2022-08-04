@@ -1,68 +1,62 @@
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
 import React, { Component } from "react";
-import PublicNote from "./components/PublicNote";
-import PrivateNote from "./components/PrivateNote";
 import StartPage from "./components/StartPage";
+import SessionWindowRoute from "./components/SessionWindow";
 
 const URL = "ws://localhost:8080";
 
 class App extends Component {
   state = {
     socket: null,
-    isStartPage: true,
-    isConnected: false,
-    members: [],
-    notes: [],
+    members: null,
+    instances: null,
+    sessionID: null,
   };
-
-  // componentDidMount = () => {
-  //   console.log(this.state.socket);
-  //   if(this.state.socket!== null && this.state.socket?.readyState !== WebSocket.OPEN){
-  //     alert("Session ended. You can connect again");
-  //   }
-  // }
 
   onSocketClose = () => {
     alert("Session ended. You can connect again");
-  }
-
-  onConnectApp = (username) => {
-    this.onConnect(username);
   };
 
-  onConnect = (username) => {
-    if (this.state.socket?.readyState !== WebSocket.OPEN) {
-      this.state.socket = new WebSocket(URL);
-      this.state.socket.addEventListener("open", () =>
-        this.onSocketOpen(username)
-      );
-      this.state.socket.addEventListener("message", (event) => {
-        this.onSocketMessage(event.data);
-      });
-      this.state.socket.addEventListener("close", () => this.onSocketClose());
-    }
+  onConnectApp = (username, sessionID) => {
+    this.onConnect(username, sessionID);
   };
 
-  onSocketOpen = (username) => {
-    this.setState({
-      isConnected: true,
+  onConnect = (username, sessionID) => {
+    this.state.socket = new WebSocket(URL);
+    this.state.socket.addEventListener("open", () =>
+      this.onSocketOpen(username, sessionID)
+    );
+    this.state.socket.addEventListener("message", (event) => {
+      this.onSocketMessage(event.data);
     });
+    this.state.socket.addEventListener("close", () => this.onSocketClose());
+  };
+
+  onSocketOpen = (username, sessionID) => {
     this.state.socket?.send(
       JSON.stringify({
-        action: "setName",
+        action: "setNameAndSession",
         name: username,
+        sessionID,
       })
     );
   };
 
   onSocketMessage = (dataStr) => {
     const data = JSON.parse(dataStr);
+    console.log(data);
     switch (data?.type) {
+      case "wrongSessionID":
+        alert(
+          "Incorrect sessionID. Join with a correct one or start a new session."
+        );
+        break;
       case "initialData":
         this.setState({
           members: data.members,
-          notes: data.notes,
-          isStartPage: false,
+          instances: data.instances,
+          sessionID: data.sessionID,
         });
         break;
       case "newMember":
@@ -75,6 +69,13 @@ class App extends Component {
         });
         alert(`${data.memberInfo.name} has joined the session`);
         break;
+
+      case "updatedInstancesData":
+        this.setState({
+          instances: data.instance,
+        })
+        break;
+
       case "newNote":
         let newNotes = this.state.notes;
         console.log(newNotes);
@@ -108,24 +109,46 @@ class App extends Component {
     );
   };
 
+  createNewInstance = (id, name) => {
+    this.state.socket?.send(
+      JSON.stringify({
+        action: "createNewInstance",
+        sessionID: id,
+        instanceName: name,
+      })
+    );
+  };
+
   render() {
+    console.log(this.state.instances);
     return (
       <div className="App">
-        {this.state.isStartPage ? (
-          <StartPage onConnect={this.onConnectApp} />
-        ) : (
-          <div>
-            <PublicNote notes={this.state.notes} />
-            <PrivateNote onSend={this.sendNote} />
-            {this.state.members.map((member) => (
-              <span>{member.name}</span>
-            ))}
-          </div>
-        )}
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <StartPage
+                onConnect={this.onConnectApp}
+                sessionID={this.state.sessionID}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/:sessionID"
+            element={
+              <SessionWindowRoute
+                members={this.state.members}
+                instances={this.state.instances}
+                newInstance={this.createNewInstance}
+              />
+            }
+          />
+        </Routes>
       </div>
     );
   }
 }
 
 export default App;
-

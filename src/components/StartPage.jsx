@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Navigate } from "react-router-dom";
 
 class StartPage extends Component {
   state = {
     name: "",
+    meetingId: ""
   };
 
   handleChange = (event) => {
@@ -11,11 +13,17 @@ class StartPage extends Component {
     });
   };
 
+  handleChangeMeeting = (event) => {
+    this.setState({
+      meetingId: event.target.value,
+    });
+  };
+
   render() {
     return (
       <div id="startPage">
         <h4>Start Session</h4>
-        Name:{" "}
+        Name:
         <input
           type="text"
           id="user"
@@ -25,9 +33,17 @@ class StartPage extends Component {
         />
         <br></br>
         <br></br>
-        <button onClick={() => this.props.onConnect(this.state.name)}>
-          Join
-        </button>
+        Meeting Id:
+        <input
+          type="text"
+          id="meetingId"
+          placeholder="Enter meeting id"
+          onChange={this.handleChangeMeeting}
+          value={this.state.meetingId}
+        />
+        <button onClick={() => this.props.onConnect(this.state.name, this.state.meetingId)}>Join a meeting</button> <br></br>
+        <button onClick={() => this.props.onConnect(this.state.name)}>Start new meeting</button> <br></br>
+        {this.props.sessionID? <Navigate to={`/${this.props.sessionID}`} />: <></>}
       </div>
     );
   }

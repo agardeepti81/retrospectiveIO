@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import PublicNote from "./PublicNote";
-import PrivateNote from "./PrivateNote";
-import { useParams } from "react-router-dom";
+import Instance from "./Instance";
+import { Navigate, useParams } from "react-router-dom";
 
 const SessionWindowRoute = (props) => {
   const params = useParams();
@@ -13,6 +12,7 @@ const SessionWindowRoute = (props) => {
       members={props.members}
       instances={props.instances}
       newInstance={props.newInstance}
+      sendNote={props.sendNote}
     />
   );
 };
@@ -20,7 +20,7 @@ const SessionWindowRoute = (props) => {
 class SessionWindow extends Component {
   state = {
     instanceName: "",
-    notes: "",
+    notes: ""
   };
 
   handleChange = (event) => {
@@ -30,6 +30,7 @@ class SessionWindow extends Component {
   };
 
   render() {
+    console.log(Object.keys(this.props.instances));
     return (
       <div>
         Instance name:{" "}
@@ -49,12 +50,17 @@ class SessionWindow extends Component {
               this.state.instanceName
             )
           }
-        >+</button>
-        {/* <PublicNote notes={this.state.notes} />
-        <PrivateNote onSend={this.sendNote} />
-        {this.state.members.map((member) => (
-          <span>{member.name}</span>
-        ))} */}
+        >
+          +
+        </button>
+        {Object.keys(this.props.instances).map((instanceID) => (
+          <Instance 
+          instanceID={instanceID} 
+          instanceInfo={this.props.instances[instanceID]} 
+          sendNote={this.props.sendNote}
+          members={this.props.members}
+          sessionID={this.props.sessionID}/>
+        ))}
       </div>
     );
   }

@@ -2,12 +2,13 @@ import React, { Component } from "react";
 
 class PublicNote extends Component {
   render() {
+    console.log(this.props.members);
     return (
         <div id="publicNotes">
         <h4>Public Note</h4>
-        {this.props.notes.map((note,i) => (
-          <div key = {i}>
-            <div>{note.uid} : {note.note}</div>
+        {Object.entries(this.props.instanceInfo.notes).map((i) => (
+          <div key = {i[0]}>
+            <div>{i[1].name} : {i[1].note}</div>
           </div>
         ))}
       </div>

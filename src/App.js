@@ -73,7 +73,7 @@ class App extends Component {
       case "updatedInstancesData":
         this.setState({
           instances: data.instance,
-        })
+        });
         break;
 
       case "newNote":
@@ -100,11 +100,14 @@ class App extends Component {
     }
   };
 
-  sendNote = (newNote) => {
+  sendNote = (newNote, sessionID, instanceID) => {
+    console.log(newNote, sessionID, instanceID)
     this.state.socket?.send(
       JSON.stringify({
         action: "onNewNote",
         note: newNote,
+        sessionID: sessionID,
+        instanceID: instanceID
       })
     );
   };
@@ -120,8 +123,8 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state.instances);
     return (
+
       <div className="App">
         <Routes>
           <Route
@@ -142,6 +145,7 @@ class App extends Component {
                 members={this.state.members}
                 instances={this.state.instances}
                 newInstance={this.createNewInstance}
+                sendNote={this.sendNote}
               />
             }
           />

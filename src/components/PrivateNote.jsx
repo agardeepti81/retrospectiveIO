@@ -13,9 +13,9 @@ class PrivateNote extends Component {
 
   deleteText = (event) => {
     this.setState({
-        note: "",
-      });
-  }
+      note: "",
+    });
+  };
 
   render() {
     return (
@@ -30,8 +30,18 @@ class PrivateNote extends Component {
           value={this.state.note}
         />
         <br></br>
-        <button onClick={() => this.props.onSend(this.state.note)}>Send</button>
-        <button onClick={this.deleteText} >Clear</button>
+        <button
+          onClick={() =>
+            this.props.sendNote(
+              this.state.note,
+              this.props.sessionID,
+              this.props.instanceID
+            )
+          }
+        >
+          Send
+        </button>
+        <button onClick={this.deleteText}>Clear</button>
       </div>
     );
   }

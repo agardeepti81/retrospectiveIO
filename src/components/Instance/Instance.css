@@ -1,0 +1,13 @@
+#instance{
+    width: 32%;
+    height: 86vh;
+    border: 1px solid black;
+    float: left;
+    margin-left: 2px;
+    display: flex;
+}
+
+#Name{
+    background-color: rgb(30, 160, 211);
+    width: auto;
+}

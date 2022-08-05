@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-import PublicNote from "./PublicNote";
-import PrivateNote from "./PrivateNote";
+import PublicNote from "../PublicNote";
+import PrivateNote from "../PrivateNote";
+import "./Instance.css"
 
 class Instance extends Component {
   state = {};
   render() {
+    console.log(this.props.instanceInfo);
     return (
-      <div>
+      <div id="instance">
+        <span id="Name">{this.props.instanceInfo.name}</span>
         <PublicNote
           instanceInfo={this.props.instanceInfo}
           members={this.props.members}

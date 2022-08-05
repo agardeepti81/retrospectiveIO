@@ -13,12 +13,11 @@ code {
 }
 
 #publicNotes{
-  width: 600px;
   height: 400px;
   background-color: white;
   border: 2px solid black;
   padding: 10px;
-  margin-left: 50px;
+  margin-left: auto;
   margin-top: 15px;
   text-align: left;
 }
@@ -34,23 +33,3 @@ code {
   margin-top: 10px;
 }
 
-#startPage{
-  width: 300px;
-  height: 15opx;
-  background-color: white;
-  border: 2px solid black;
-  padding: 5px;
-  margin: 3px;
-  margin-left: 50px;
-  margin-top: 35px;
-}
-
-h4 {
-  display: block;
-  margin-block-start: 2px;
-  margin-block-end: 7px;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-  text-align: center;
-}

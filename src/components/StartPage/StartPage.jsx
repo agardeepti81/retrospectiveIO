@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
+import { TextField } from "@mui/material";
+import "./StartPage.css";
 
 class StartPage extends Component {
   state = {
     name: "",
-    meetingId: ""
+    meetingId: "",
   };
 
   handleChange = (event) => {
@@ -22,7 +24,25 @@ class StartPage extends Component {
   render() {
     return (
       <div id="startPage">
-        <h4>Start Session</h4>
+        <div className="workingArea">
+          <div className="ideatitle">Let's share our ideas#@!!</div>
+          <div className="name">
+            <div className="label">Name:</div>
+            <TextField id="outlined-required" label="Name" />
+          </div>
+          <div className="session">
+            <div className="newSession">
+              <button>Start new Session</button>
+            </div>
+            <div className="existingSession">
+              <div className="sessionID">SessionID:</div>
+              <input />
+              <button>Join session</button>
+            </div>
+          </div>
+        </div>
+        <div className="displayArea">Add Image here</div>
+        {/* <h4>Start Session</h4>
         Name:
         <input
           type="text"
@@ -43,7 +63,7 @@ class StartPage extends Component {
         />
         <button onClick={() => this.props.onConnect(this.state.name, this.state.meetingId)}>Join a meeting</button> <br></br>
         <button onClick={() => this.props.onConnect(this.state.name)}>Start new meeting</button> <br></br>
-        {this.props.sessionID? <Navigate to={`/${this.props.sessionID}`} />: <></>}
+        {this.props.sessionID? <Navigate to={`/${this.props.sessionID}`} />: <></>} */}
       </div>
     );
   }

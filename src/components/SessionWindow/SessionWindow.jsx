@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import Instance from "./Instance";
-import { Navigate, useParams } from "react-router-dom";
+import Instance from "../Instance/Instance";
+import { useParams } from "react-router-dom";
+import "./SessionWindow.css";
 
 const SessionWindowRoute = (props) => {
   const params = useParams();
@@ -33,7 +34,8 @@ class SessionWindow extends Component {
     console.log(Object.keys(this.props.instances));
     return (
       <div>
-        Instance name:{" "}
+        <div id="sessionWindowTop">
+        <b>create new Instance:{" "}</b>
         <input
           type="text"
           id="instanceName"
@@ -41,9 +43,7 @@ class SessionWindow extends Component {
           onChange={this.handleChange}
           value={this.state.instanceName}
         />
-        <br></br>
-        create new Instance:
-        <button
+        {" "}<button
           onClick={() =>
             this.props.newInstance(
               this.props.sessionID,
@@ -53,6 +53,8 @@ class SessionWindow extends Component {
         >
           +
         </button>
+        </div>
+        <div id="sessionWindowBottom">
         {Object.keys(this.props.instances).map((instanceID) => (
           <Instance 
           instanceID={instanceID} 
@@ -61,6 +63,7 @@ class SessionWindow extends Component {
           members={this.props.members}
           sessionID={this.props.sessionID}/>
         ))}
+        </div>
       </div>
     );
   }

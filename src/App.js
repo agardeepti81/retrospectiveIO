@@ -1,8 +1,8 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import React, { Component } from "react";
-import StartPage from "./components/StartPage";
-import SessionWindowRoute from "./components/SessionWindow";
+import StartPage from "./components/StartPage/StartPage";
+import SessionWindowRoute from "./components/SessionWindow/SessionWindow";
 
 const URL = "ws://localhost:8080";
 
@@ -124,8 +124,10 @@ class App extends Component {
 
   render() {
     return (
-
       <div className="App">
+        <div className="navBar">
+          <div className="title">Retrospective.io</div>
+        </div>
         <Routes>
           <Route
             exact

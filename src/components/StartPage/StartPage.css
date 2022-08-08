@@ -1,7 +1,6 @@
 .workingArea {
   width: 65%;
   text-align: center;
-  border: 1px solid gray;
   padding: 7%;
 }
 
@@ -14,19 +13,59 @@
   min-height: 80vh;
 }
 
-.ideatitle{
+.ideatitle {
   text-shadow: 2px 10px 3px rgb(0, 153, 255);
   font-size: 45px;
-  font-family: 'Lucida Sans';
+  font-family: "Lucida Sans";
   font-style: oblique;
 }
 
-.label{
+.label {
   text-align: left;
   margin-left: 270px;
   font-size: 20px;
   margin-bottom: 3px;
 }
+
+.session {
+  width: 93%;
+  margin: 4vh;
+  padding-top: 5px;
+}
+
+.name {
+  margin-top: 3vh;
+}
+
+.newSession {
+  width: 43%;
+  float: left;
+  margin-left: 46px;
+  margin-top: 42px;
+}
+
+.existingSession {
+  width: 50%;
+  float: left;
+  border-left: 3px solid black;
+}
+
+.sessionID {
+  margin-right: 231px;
+  font-size: 20px;
+  font-weight: normal;
+}
+
+.sessionInput{
+  margin-right: 96px;
+  max-height: 39px;
+}
+
+.joinSession{
+  margin-right: 226px;
+  margin-top: 0px;
+}
+
 /* #startPage{
     width: 300px;
     height: 15px;
@@ -47,4 +86,3 @@
     font-weight: bold;
     text-align: center;
   } */
-

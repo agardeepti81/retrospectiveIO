@@ -1,13 +1,32 @@
-#instance{
-    width: 32%;
-    height: 86vh;
-    border: 1px solid black;
-    float: left;
-    margin-left: 2px;
-    display: flex;
+
+.instance {
+    width: 50%;
+    height: 100%;
+    min-width: 35%;
 }
 
-#Name{
-    background-color: rgb(30, 160, 211);
-    width: auto;
+.instance .head {
+    height: 6%;    
+    border: 1px inset black;
+    display: flex;
+    align-items: center;
+}
+.instance .publicNote, .instance .privateNote {
+    height: 47%;
+    border: 1px inset black;
+}
+
+.instance .emptyDiv {
+    width: 10%;
+}
+
+.instance .name {
+    width: 80%;
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.instance .deleteInstance {
+    width: 10%;
 }

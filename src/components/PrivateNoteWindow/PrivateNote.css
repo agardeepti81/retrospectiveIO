@@ -1,0 +1,10 @@
+.privateNote .notesSpace{
+    height: 70%;
+    width: 100%;
+}
+.privateNote .newNote{
+    height: 30%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}

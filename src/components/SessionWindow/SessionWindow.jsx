@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Instance from "../Instance/Instance";
 import { useParams } from "react-router-dom";
 import "./SessionWindow.css";
+import {Button, Fab, TextField} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
 const SessionWindowRoute = (props) => {
   const params = useParams();
@@ -14,6 +17,7 @@ const SessionWindowRoute = (props) => {
       instances={props.instances}
       newInstance={props.newInstance}
       sendNote={props.sendNote}
+      deleteInstance={props.deleteInstance}
     />
   );
 };
@@ -21,7 +25,8 @@ const SessionWindowRoute = (props) => {
 class SessionWindow extends Component {
   state = {
     instanceName: "",
-    notes: ""
+    notes: "",
+    createInsanceClicked: false,
   };
 
   handleChange = (event) => {
@@ -30,39 +35,77 @@ class SessionWindow extends Component {
     });
   };
 
+  toggleInstanceModel = () => {
+    this.setState({
+      createInsanceClicked: !this.state.createInsanceClicked,
+    });
+  };
+
+  createNewInstance = () => {
+    if (this.state.instanceName == "") {
+      alert("Please enter instance Name");
+      return;
+    }
+    this.props.newInstance(this.props.sessionID, this.state.instanceName);
+    this.setState({
+      createInsanceClicked: false,
+      instanceName: "",
+    });
+  };
+
   render() {
     console.log(Object.keys(this.props.instances));
     return (
-      <div>
-        <div id="sessionWindowTop">
-        <b>create new Instance:{" "}</b>
-        <input
-          type="text"
-          id="instanceName"
-          placeholder="Instance Name"
-          onChange={this.handleChange}
-          value={this.state.instanceName}
-        />
-        {" "}<button
-          onClick={() =>
-            this.props.newInstance(
-              this.props.sessionID,
-              this.state.instanceName
-            )
-          }
-        >
-          +
-        </button>
-        </div>
-        <div id="sessionWindowBottom">
+      <div id="sessionWindow">
         {Object.keys(this.props.instances).map((instanceID) => (
-          <Instance 
-          instanceID={instanceID} 
-          instanceInfo={this.props.instances[instanceID]} 
-          sendNote={this.props.sendNote}
-          members={this.props.members}
-          sessionID={this.props.sessionID}/>
+          <Instance
+            instanceID={instanceID}
+            instanceInfo={this.props.instances[instanceID]}
+            sendNote={this.props.sendNote}
+            members={this.props.members}
+            sessionID={this.props.sessionID}
+            deleteInstance={this.props.deleteInstance}
+          />
         ))}
+        <div id="createInstance">
+          <div id="button">
+            {this.state.createInsanceClicked ? (
+              <Fab
+                size="large"
+                color="primary"
+                aria-label="edit"
+                onClick={this.toggleInstanceModel}
+              >
+                <CloseIcon />
+              </Fab>
+            ) : (
+              <Fab
+                size="large"
+                color="primary"
+                aria-label="edit"
+                onClick={this.toggleInstanceModel}
+              >
+                <AddIcon />
+              </Fab>
+            )}
+            {this.state.createInsanceClicked ? (
+              <div id="instanceName">
+                <TextField
+                  id="outlined-basic"
+                  label="Instance name"
+                  variant="outlined"
+                  onChange={this.handleChange}
+                  value={this.state.instanceName}
+                  size="small"
+                />
+                <Button id="addInstance" variant="contained" onClick={this.createNewInstance}>
+                  Add
+                </Button>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     );

@@ -12,6 +12,7 @@ class App extends Component {
     members: null,
     instances: null,
     sessionID: null,
+    createInstances: 0,
   };
 
   onSocketClose = () => {
@@ -19,6 +20,9 @@ class App extends Component {
   };
 
   onConnectApp = (username, sessionID) => {
+    if (!sessionID) {
+      this.setState({ createInstances: 1 });
+    }
     this.onConnect(username, sessionID);
   };
 
@@ -58,6 +62,10 @@ class App extends Component {
           instances: data.instances,
           sessionID: data.sessionID,
         });
+        for(let i=0; i<this.state.createInstances; i++)
+        {
+          this.createNewInstance(data.sessionID, "start");
+        }
         break;
       case "newMember":
         let newMembers = this.state.members;
@@ -101,13 +109,13 @@ class App extends Component {
   };
 
   sendNote = (newNote, sessionID, instanceID) => {
-    console.log(newNote, sessionID, instanceID)
+    console.log(newNote, sessionID, instanceID);
     this.state.socket?.send(
       JSON.stringify({
         action: "onNewNote",
         note: newNote,
         sessionID: sessionID,
-        instanceID: instanceID
+        instanceID: instanceID,
       })
     );
   };
@@ -122,6 +130,15 @@ class App extends Component {
     );
   };
 
+  deleteInstance = (instanceID, sessionID) => {
+    this.state.socket?.send(
+      JSON.stringify({
+        action: "deleteInstance",
+        instanceID: instanceID,
+        sessionID: sessionID,
+      })
+    );
+  }
   render() {
     return (
       <div className="App">
@@ -148,6 +165,7 @@ class App extends Component {
                 instances={this.state.instances}
                 newInstance={this.createNewInstance}
                 sendNote={this.sendNote}
+                deleteInstance={this.deleteInstance}
               />
             }
           />

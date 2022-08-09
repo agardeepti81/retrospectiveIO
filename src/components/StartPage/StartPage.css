@@ -20,20 +20,13 @@
   font-style: oblique;
 }
 
-.label {
-  text-align: left;
-  margin-left: 270px;
-  font-size: 20px;
-  margin-bottom: 3px;
-}
-
 .session {
   width: 93%;
   margin: 4vh;
   padding-top: 5px;
 }
 
-.name {
+#startPage .name {
   margin-top: 3vh;
 }
 
@@ -50,39 +43,14 @@
   border-left: 3px solid black;
 }
 
-.sessionID {
-  margin-right: 231px;
-  font-size: 20px;
-  font-weight: normal;
-}
 
-.sessionInput{
-  margin-right: 96px;
+.sessionInput {
+  margin-right: 76px;
   max-height: 39px;
 }
 
-.joinSession{
-  margin-right: 226px;
+.joinSession {
+  margin-right: 165px;
   margin-top: 0px;
 }
 
-/* #startPage{
-    width: 300px;
-    height: 15px;
-    background-color: white;
-    border: 2px solid black;
-    padding: 5px;
-    margin: 3px;
-    margin-left: 50px;
-    margin-top: 35px;
-  }
-  
-  h4 {
-    display: block;
-    margin-block-start: 2px;
-    margin-block-end: 7px;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    text-align: center;
-  } */

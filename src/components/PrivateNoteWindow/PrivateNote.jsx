@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import TextField from "@mui/material/TextField";
 import "./PrivateNote.css";
+import Note from "../Note/Note";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 class PrivateNote extends Component {
   state = {
@@ -35,14 +36,33 @@ class PrivateNote extends Component {
     });
   };
 
+  deleteNote = (delnote) => {
+    let updatedNotes = this.state.allNotes;
+    let deleteNoteIndex = this.state.allNotes.findIndex(
+      (note) => note == delnote
+    );
+    if (deleteNoteIndex !== -1) {
+      updatedNotes.splice(deleteNoteIndex, 1);
+    }
+    this.setState({
+      allNotes: updatedNotes
+    })
+  }
+
   render() {
     return (
       <div class="privateNote">
         <div className="notesSpace">
+        {this.state.allNotes.map((i) => (
+          <Note note={i} deleteNote={this.deleteNote}/>
+        ))}
+        </div>
+        {/* <div className="notesSpace">
           <Box 
             sx={{
               display: "flex",
               flexWrap: "wrap",
+              justifyContent: "center",
               "& > :not(style)": {
                 m: 1,
                 width: 128,
@@ -51,10 +71,13 @@ class PrivateNote extends Component {
             }}
           >
             {this.state.allNotes.map((i) => (
-              <Paper elevation={3}>{i}</Paper>
+              <Paper elevation={3} >
+                <CheckCircleIcon sx={{color:"green", size: "small"}}/>
+                {i}
+                </Paper>
             ))}
           </Box>
-        </div>
+        </div> */}
         <div className="newNote">
           <TextField
             id="outlined-multiline-flexible"

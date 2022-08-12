@@ -1,0 +1,13 @@
+
+ .note{
+    width: 152px;
+    height: 100px;
+    background-color:rgb(128, 184, 230);
+    margin: 2px;
+}
+
+button{
+     background-color: black;
+     color: white;
+     float:right;
+}

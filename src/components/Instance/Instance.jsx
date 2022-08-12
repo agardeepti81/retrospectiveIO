@@ -27,7 +27,10 @@ class Instance extends Component {
             <DeleteIcon fontSize="inherit" />
           </IconButton>
         </div>
-        <div className="publicNote">Public Note</div>
+        <div className="publicNote"><PublicNote
+          instanceInfo={this.props.instanceInfo}
+          members={this.props.members}
+        /></div>
         <PrivateNote
             instanceInfo={this.props.instanceInfo}
             members={this.props.members}

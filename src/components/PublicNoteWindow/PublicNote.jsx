@@ -4,7 +4,7 @@ class PublicNote extends Component {
   render() {
     console.log(this.props.members);
     return (
-        <div id="publicNotes">
+        <div>
         <h4>Public Note</h4>
         {Object.entries(this.props.instanceInfo.notes).map((i) => (
           <div key = {i[0]}>

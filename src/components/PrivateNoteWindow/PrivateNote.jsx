@@ -45,39 +45,24 @@ class PrivateNote extends Component {
       updatedNotes.splice(deleteNoteIndex, 1);
     }
     this.setState({
-      allNotes: updatedNotes
-    })
-  }
+      allNotes: updatedNotes,
+    });
+  };
 
   render() {
     return (
       <div class="privateNote">
         <div className="notesSpace">
-        {this.state.allNotes.map((i) => (
-          <Note note={i} deleteNote={this.deleteNote}/>
-        ))}
+          {this.state.allNotes.map((i) => (
+            <Note
+              note={i}
+              deleteNote={this.deleteNote}
+              sendNote={this.props.sendNote}
+              sessionID={this.props.sessionID}
+              instanceID={this.props.instanceID}
+            />
+          ))}
         </div>
-        {/* <div className="notesSpace">
-          <Box 
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              "& > :not(style)": {
-                m: 1,
-                width: 128,
-                height: 64,
-              },
-            }}
-          >
-            {this.state.allNotes.map((i) => (
-              <Paper elevation={3} >
-                <CheckCircleIcon sx={{color:"green", size: "small"}}/>
-                {i}
-                </Paper>
-            ))}
-          </Box>
-        </div> */}
         <div className="newNote">
           <TextField
             id="outlined-multiline-flexible"
@@ -97,7 +82,13 @@ class PrivateNote extends Component {
           >
             <AddIcon />
           </Fab>
-          <Button variant="contained" endIcon={<SendIcon />} sx={{ m: 1 }}>
+          <Button 
+          variant="contained" 
+          endIcon={<SendIcon />} sx={{ m: 1 }} 
+          onClick={() => this.state.allNotes.map((i) => 
+             this.props.sendNote( i,this.props.sessionID,this.props.instanceID)
+          )} 
+          >
             Send
           </Button>
         </div>

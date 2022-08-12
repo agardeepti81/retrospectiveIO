@@ -1,0 +1,18 @@
+.publicNote .notesSpace{
+    height: 70%;
+    width: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+ 
+}
+
+/* .publicNote .notesSpace .note{
+    width: 152;
+    height: 100;
+    background:"yellow";
+    color:"red";
+    margin: 2;
+  
+} */

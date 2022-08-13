@@ -1,24 +1,94 @@
-
- .note{
-    width: 152px;
-    height: 100px;
-    background-color:rgb(128, 184, 230);
-    margin: 2px;
-    overflow: hidden;
+.note {
+  width: 152px;
+  height: 100px;
+  background-color: rgb(128, 184, 230);
+  margin: 0px 30px 15px 0px;
 }
 
-button{
-     background-color: black;
-     color: white;
-     float:right;
+.closeIcon {
+  font-size: 16px !important;
+  position: relative;
+  float: right;
+  top: -8px;
+  right: -8px;
+  color: #d10404;
+  background: white;
+  border-radius: 50%;
 }
 
-#delete{
-     margin: 1px;
+.closeIcon :hover {
+  cursor: pointer;
 }
 
-#send{
-     margin: 1px;
-     background-color: green;
-     color: black
+/* .sendNoteIcon {
+     float: right;
+} */
+
+.saveNoteIcon {
+  font-size: 21px !important;
+  float: left;
+  position: relative;
+  left: -12.5px;
+  top: 87.5px;
+  border-radius: 50%;
+  color: green;
+  background: white;
+  border: solid white 2px;
+}
+
+.deleteNoteIcon {
+  font-size: 21px !important;
+  float: right;
+  position: relative;
+  top: -12.5px;
+  right: -37.5px;
+  color: #d10404;
+  background: white;
+  border-radius: 50%;
+  border: solid white 2px;
+}
+
+.editNoteIcon {
+  font-size: 21px !important;
+  float: right;
+  position: relative;
+  top: 16.5px;
+  right: -62.5px;
+  background: white;
+  border-radius: 50%;
+  border: solid white 2px;
+}
+
+.sendNoteIcon {
+  font-size: 21px !important;
+  float: right;
+  position: relative;
+  top: -12.5px;
+  right: 16.5px;
+  color: blue;
+  background: white;
+  border-radius: 50%;
+  border: solid white 2px;
+}
+
+.senderName {
+  border: solid white 2px;
+  float: right;
+  position: relative;
+  right: -87.5px;
+  top: 87.5px;
+  background: white;
+  border-radius: 50%;
+  width: 21px;
+  height: 21px;
+  text-align: center;
+}
+
+.senderName:hover {
+  width: 120px;
+  border-radius: 10px;
+  right: -10px;
+  top: 62.5px;
+  text-align: left;
+  padding-left: 5px;
 }

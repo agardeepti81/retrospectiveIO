@@ -13,7 +13,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 class PrivateNote extends Component {
   state = {
     note: "",
-    allNotes: [],
+    allNotes: ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam facilis repellendus incidunt quidem? Quasi dolores culpa optio excepturi cum .", "note1", "note2", "note3", "note4", "note5"],
   };
 
   handleChange = (event) => {
@@ -63,7 +63,7 @@ class PrivateNote extends Component {
             />
           ))}
         </div>
-        <div className="newNote">
+        {/* <div className="newNote">
           <TextField
             id="outlined-multiline-flexible"
             label="Private-Note"
@@ -91,7 +91,7 @@ class PrivateNote extends Component {
           >
             Send
           </Button>
-        </div>
+        </div> */}
         {/* <h4>Private Note</h4>
         <textarea
           id="comment"

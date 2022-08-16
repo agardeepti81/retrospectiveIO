@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./Note.css";
-import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import IosShareIcon from "@mui/icons-material/IosShare";
@@ -8,6 +7,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 class Note extends Component {
   state = {};
+
   render() {
     return (
       <div className="note">
@@ -29,8 +29,9 @@ class Note extends Component {
         </div>
         <div
           className="text"
-          contentEditable="true"
+          contentEditable={this.props.isContentEditable}
           onInput={(e) => this.props.onChange(e)}
+          style={{fontSize: this.props.fontSize}}
         >
           {this.props.note}
         </div>
@@ -39,7 +40,7 @@ class Note extends Component {
             className="saveNoteIcon"
             onClick={() => this.props.addNote()}
           />
-          <ModeEditIcon className="editNoteIcon" />
+          <ModeEditIcon className="editNoteIcon" onClick={this.props.editContent} />
         </div>
         {/* <CancelIcon className="closeIcon" onClick={() => this.props.deleteNote(this.props.note)} /> */}
         {/* <IosShareIcon className="sendNoteIcon"/>

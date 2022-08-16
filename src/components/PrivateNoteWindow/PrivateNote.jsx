@@ -7,11 +7,25 @@ class PrivateNote extends Component {
   state = {
     note: "",
     allNotes: [],
+    isContentEditable: "false",
+    fontSize: null
   };
 
   handleChange = (event) => {
     this.setState({
       note: event.currentTarget.textContent,
+    });
+    if(this.state.note.length < 50)
+    this.setState({
+      fontSize: "medium"
+    });
+    else if((this.state.note.length > 50) && (this.state.note.length <100))
+    this.setState({
+      fontSize: "small"
+    });
+    else if ((this.state.note.length > 100))
+    this.setState({
+      fontSize: "x-small"
     });
   };
 
@@ -26,6 +40,7 @@ class PrivateNote extends Component {
     notes.push(this.state.note);
     this.setState({
       allNotes: notes,
+      isContentEditable: "false"
     });
     console.log(this.state.allNotes);
   };
@@ -42,6 +57,21 @@ class PrivateNote extends Component {
       allNotes: updatedNotes,
     });
   };
+
+  createFirstNote = () => {
+    let firstNote = "Enter text here";
+    let notes = this.state.allNotes;
+    notes.push(firstNote);
+    this.setState({
+      allNotes: notes,
+    });
+  }
+
+  editContent = () => {
+    this.setState({
+      isContentEditable: "true",
+    })
+  }
 
   render() {
     return (
@@ -63,19 +93,7 @@ class PrivateNote extends Component {
           </Button>
         </div>
         <div className="notesSpace">
-          {this.state.allNotes.length == 0 ? (
-            <Note
-              note={"Enter text here.."}
-              deleteNote={this.deleteNote}
-              sendNote={this.props.sendNote}
-              sessionID={this.props.sessionID}
-              instanceID={this.props.instanceID}
-              addNote={this.addNote}
-              onChange={this.handleChange}
-            />
-          ) : (
-            <></>
-          )}
+          {this.state.allNotes.length == 0 ? this.createFirstNote() : <></>}
           {this.state.allNotes.map((i) => (
             <Note
               note={i}
@@ -85,6 +103,9 @@ class PrivateNote extends Component {
               instanceID={this.props.instanceID}
               addNote={this.addNote}
               onChange={this.handleChange}
+              editContent={this.editContent}
+              isContentEditable={this.state.isContentEditable}
+              fontSize={this.state.fontSize}
             />
           ))}
         </div>

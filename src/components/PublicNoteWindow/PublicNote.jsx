@@ -14,7 +14,7 @@ class PublicNote extends Component {
                 style={{
                   width: 152,
                   height: 100,
-                  background: "yellow",
+                  background: "lightpink",
                   color: "red",
                   margin: 2,
                 }}

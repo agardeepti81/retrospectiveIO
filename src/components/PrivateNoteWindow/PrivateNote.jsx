@@ -1,24 +1,17 @@
 import React, { Component } from "react";
-import TextField from "@mui/material/TextField";
 import "./PrivateNote.css";
 import Note from "../Note/Note";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 class PrivateNote extends Component {
   state = {
     note: "",
-    allNotes: ["Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam facilis repellendus incidunt quidem? Quasi dolores culpa optio excepturi cum .", "note1", "note2", "note3", "note4", "note5"],
+    allNotes: [],
   };
 
   handleChange = (event) => {
     this.setState({
-      note: event.target.value,
+      note: event.currentTarget.textContent,
     });
   };
 
@@ -34,6 +27,7 @@ class PrivateNote extends Component {
     this.setState({
       allNotes: notes,
     });
+    console.log(this.state.allNotes);
   };
 
   deleteNote = (delnote) => {
@@ -52,7 +46,36 @@ class PrivateNote extends Component {
   render() {
     return (
       <div class="privateNote">
+        <div className="publishAll">
+          <Button
+            variant="text"
+            onClick={() =>
+              this.state.allNotes.map((i) =>
+                this.props.sendNote(
+                  i,
+                  this.props.sessionID,
+                  this.props.instanceID
+                )
+              )
+            }
+          >
+            Publish All
+          </Button>
+        </div>
         <div className="notesSpace">
+          {this.state.allNotes.length == 0 ? (
+            <Note
+              note={"Enter text here.."}
+              deleteNote={this.deleteNote}
+              sendNote={this.props.sendNote}
+              sessionID={this.props.sessionID}
+              instanceID={this.props.instanceID}
+              addNote={this.addNote}
+              onChange={this.handleChange}
+            />
+          ) : (
+            <></>
+          )}
           {this.state.allNotes.map((i) => (
             <Note
               note={i}
@@ -60,6 +83,8 @@ class PrivateNote extends Component {
               sendNote={this.props.sendNote}
               sessionID={this.props.sessionID}
               instanceID={this.props.instanceID}
+              addNote={this.addNote}
+              onChange={this.handleChange}
             />
           ))}
         </div>

@@ -1,10 +1,32 @@
 .note {
   width: 152px;
-  height: 100px;
-  background-color: rgb(128, 184, 230);
-  margin: 0px 30px 15px 0px;
+  height: 120px;
+  background-color: rgb(149, 243, 243);
+  margin: 15px 30px 15px 0px;
+  border-radius: 10%;
 }
 
+.note .upperIcons{
+  height: 10%;
+  border-radius: 10%;
+}
+
+.note .text{
+  height: 80%;
+  border-radius: 10%;
+  width: 90%;
+  margin-top: 0px !important;
+  background-color: rgb(240, 198, 225);
+  margin-left: 5%;
+  text-align: center;
+  font-size: small;
+}
+
+
+.note .lowerIcons{
+  height: 10%;
+  border-radius: 10%;
+}
 .closeIcon {
   font-size: 16px !important;
   position: relative;
@@ -29,7 +51,7 @@
   float: left;
   position: relative;
   left: -12.5px;
-  top: 87.5px;
+  top: -4.5px;
   border-radius: 50%;
   color: green;
   background: white;
@@ -50,10 +72,10 @@
 
 .editNoteIcon {
   font-size: 21px !important;
-  float: right;
+  float: left;
   position: relative;
-  top: 16.5px;
-  right: -62.5px;
+  top: -1.5px;
+  right: 9.5px;
   background: white;
   border-radius: 50%;
   border: solid white 2px;
@@ -63,7 +85,7 @@
   font-size: 21px !important;
   float: right;
   position: relative;
-  top: -12.5px;
+  top: -14.5px;
   right: 16.5px;
   color: blue;
   background: white;

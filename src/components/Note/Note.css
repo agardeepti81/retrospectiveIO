@@ -8,7 +8,6 @@
 
 .note .upperIcons{
   height: 10%;
-  border-radius: 10%;
 }
 
 .note .text{
@@ -18,43 +17,31 @@
   margin-top: 0px !important;
   background-color: rgb(240, 198, 225);
   margin-left: 5%;
-  text-align: center;
 }
 
 
 .note .lowerIcons{
   height: 10%;
-  border-radius: 10%;
-}
-.closeIcon {
-  font-size: 16px !important;
-  position: relative;
-  float: right;
-  top: -8px;
-  right: -8px;
-  color: #d10404;
-  background: white;
-  border-radius: 50%;
 }
 
-.closeIcon :hover {
-  cursor: pointer;
-}
-
-/* .sendNoteIcon {
-     float: right;
-} */
-
-.saveNoteIcon {
+.noteIcons {
   font-size: 21px !important;
-  float: left;
-  position: relative;
-  left: -12.5px;
-  top: -4.5px;
   border-radius: 50%;
-  color: green;
   background: white;
   border: solid white 2px;
+}
+
+.lowerIcons .noteIcons {
+  position: relative;
+  left: -12.5px;
+}
+
+#saveNoteIcon {
+  color: green;
+}
+
+#cancelEditIcon {
+  color: #d10404;
 }
 
 .deleteNoteIcon {

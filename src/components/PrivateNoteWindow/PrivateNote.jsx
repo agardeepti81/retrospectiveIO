@@ -5,28 +5,32 @@ import Button from "@mui/material/Button";
 
 class PrivateNote extends Component {
   state = {
-    note: "",
+    newNote: "", //In Internal Note
     allNotes: [],
-    isContentEditable: "false",
-    fontSize: null
+    isContentEditable: "false", //In internal note
+    fontSize: null, // In internal note
   };
 
   handleChange = (event) => {
     this.setState({
       note: event.currentTarget.textContent,
     });
-    if(this.state.note.length < 50)
-    this.setState({
-      fontSize: "medium"
-    });
-    else if((this.state.note.length > 50) && (this.state.note.length <100))
-    this.setState({
-      fontSize: "small"
-    });
-    else if ((this.state.note.length > 100))
-    this.setState({
-      fontSize: "x-small"
-    });
+    if (this.state.note.length == 140)
+      this.setState({
+        isContentEditable: "false",
+      });
+    if (this.state.note.length < 50)
+      this.setState({
+        fontSize: "medium",
+      });
+    else if (this.state.note.length > 50 && this.state.note.length < 100)
+      this.setState({
+        fontSize: "small",
+      });
+    else if (this.state.note.length > 100)
+      this.setState({
+        fontSize: "x-small",
+      });
   };
 
   deleteText = (event) => {
@@ -35,14 +39,12 @@ class PrivateNote extends Component {
     });
   };
 
-  addNote = () => {
+  addNote = (note) => {
     let notes = this.state.allNotes;
-    notes.push(this.state.note);
+    notes.push(note);
     this.setState({
-      allNotes: notes,
-      isContentEditable: "false"
+      allNotes: notes
     });
-    console.log(this.state.allNotes);
   };
 
   deleteNote = (delnote) => {
@@ -65,13 +67,13 @@ class PrivateNote extends Component {
     this.setState({
       allNotes: notes,
     });
-  }
+  };
 
   editContent = () => {
     this.setState({
       isContentEditable: "true",
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -93,10 +95,10 @@ class PrivateNote extends Component {
           </Button>
         </div>
         <div className="notesSpace">
-          {this.state.allNotes.length == 0 ? this.createFirstNote() : <></>}
-          {this.state.allNotes.map((i) => (
+          {/* {this.state.allNotes.length == 0 ? this.createFirstNote() : <></>} */}
+          {this.state.allNotes.map((note) => (
             <Note
-              note={i}
+              note={note}
               deleteNote={this.deleteNote}
               sendNote={this.props.sendNote}
               sessionID={this.props.sessionID}
@@ -108,6 +110,7 @@ class PrivateNote extends Component {
               fontSize={this.state.fontSize}
             />
           ))}
+          <Note type="newNote" addNote={this.addNote} />
         </div>
         {/* <div className="newNote">
           <TextField

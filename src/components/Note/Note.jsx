@@ -6,15 +6,23 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { TextField } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { fontSize } from "@mui/system";
 
 class Note extends Component {
   state = {
     editedNote: this.props.note ? this.props.note : "",
-    editable: false,
+    editable: false
   };
 
+  componentDidMount() {
+    if (this.props.type == "newNote")
+      this.setState({
+        editable: true,
+      });
+  }
+
   handleChange = (event) => {
+    if (event.target.value.charCodeAt(event.target.value.length - 1) == 10)
+      return;
     if (event.target.value.length > 140) return;
     this.setState({
       editedNote: event.target.value,
@@ -22,8 +30,39 @@ class Note extends Component {
   };
 
   undoEdit = () => {
+    if (this.props.type == "newNote") {
+      this.setState({
+        editedNote: "",
+      });
+    } else if (this.props.type == "privateNote") {
+      this.setState({
+        editedNote: this.props.note,
+        editable: false
+      })
+    }
+  };
+
+  saveNote = () => {
+    if (this.props.type == "newNote") {
+      this.props.addNote(this.state.editedNote);
+      this.setState({
+        editedNote: "",
+      });
+    } else if (this.props.type == "privateNote") {
+      this.props.editNote(this.state.editedNote);
+      this.setState({
+        editable: false,
+      });
+    }
+  };
+
+  saveNoteOnEnter = (e) => {
+    if (e.keyCode == 13) this.saveNote();
+  };
+
+  setEditableTrue = () => {
     this.setState({
-      editedNote: "",
+      editable: true,
     });
   };
 
@@ -31,39 +70,28 @@ class Note extends Component {
     return (
       <div className="note">
         <div className="upperIcons">
-          {this.props.type == "newNote" ? (
+        {/* style={this.state.hover?{visibility: "visible"}:{visibility: "hidden"}} */}
+          {this.props.type == "newNote" || this.state.editable ? (
             <></>
           ) : (
             <IosShareIcon
-              className="sendNoteIcon"
-              onClick={() =>
-                this.props.sendNote(
-                  this.props.note,
-                  this.props.sessionID,
-                  this.props.instanceID
-                )
-              }
+              id="sendNoteIcon"
+              className="noteIcons"
+              onClick={this.props.sendNote}
             />
           )}
-          {this.props.type == "newNote" ? (
+          {this.props.type == "newNote" || this.state.editable ? (
             <></>
           ) : (
             <DeleteForeverIcon
-              className="deleteNoteIcon"
-              onClick={() => this.props.deleteNote(this.props.note)}
+              id="deleteNoteIcon"
+              className="noteIcons"
+              onClick={this.props.deleteNote}
             />
           )}
         </div>
-        {/* <div
-          className="text"
-          contentEditable={this.props.isContentEditable}
-          onInput={(e) => this.props.onChange(e)}
-          style={{ fontSize: this.props.fontSize }}
-        >
-          {this.props.note}
-        </div> */}
+        <div className="text">
         <TextField
-          className="text"
           placeholder="Start writing your note"
           multiline
           InputProps={{
@@ -77,54 +105,41 @@ class Note extends Component {
                   : "x-small",
             },
           }}
+          disabled={!this.state.editable} //!false --> disable=true, !true-->disable=false
           variant="standard"
           onChange={(e) => this.handleChange(e)}
           value={this.state.editedNote}
+          onKeyDown={this.saveNoteOnEnter}
         />
+        </div>
         <div className="lowerIcons">
-          <CheckCircleIcon
-            className="noteIcons"
-            id="saveNoteIcon"
-            onClick={() => {
-              this.props.addNote(this.state.editedNote);
-              this.setState({
-                editedNote: ""
-              })
-            }}
-          />
-          <CancelIcon
-            className="noteIcons"
-            id="cancelEditIcon"
-            onClick={() => this.undoEdit()}
-          />
-          {this.props.type == "newNote" ? (
-            <></>
+          {this.state.editable ? (
+            <>
+              <CheckCircleIcon
+                className="noteIcons"
+                id="saveNoteIcon"
+                onClick={this.saveNote}
+              />
+              <CancelIcon
+                className="noteIcons"
+                id="cancelEditIcon"
+                onClick={() => this.undoEdit()}
+              />
+            </>
           ) : (
+            <></>
+          )}
+          {this.props.type == "newNote" || this.props.type == "publicNote" ? (
+            <></>
+          ) : this.props.type == "privateNote" && !this.state.editable ? (
             <ModeEditIcon
-              className="editNoteIcon"
-              onClick={this.props.editContent}
+              className="noteIcons"
+              onClick={this.setEditableTrue}
             />
+          ) : (
+            <></>
           )}
         </div>
-        {/* <CancelIcon className="closeIcon" onClick={() => this.props.deleteNote(this.props.note)} /> */}
-        {/* <IosShareIcon className="sendNoteIcon"/>
-        <DeleteForeverIcon className="deleteNoteIcon"/>
-        <ModeEditIcon className="editNoteIcon" />
-        <CheckCircleIcon className="saveNoteIcon" />
-        <div className="senderName" contentEditable="false">Se</div> */}
-
-        {/* <button id="send"
-          onClick={() =>
-            this.props.sendNote(
-              this.props.note,
-              this.props.sessionID,
-              this.props.instanceID
-            )
-          }
-        >
-          ok
-        </button>
-        {this.props.note} */}
       </div>
     );
   }

@@ -108,13 +108,13 @@ class App extends Component {
     }
   };
 
-  sendNote = (newNote, sessionID, instanceID) => {
-    console.log(newNote, sessionID, instanceID);
+  sendNote = (newNote, instanceID) => {
+    console.log(newNote, instanceID);
     this.state.socket?.send(
       JSON.stringify({
         action: "onNewNote",
         note: newNote,
-        sessionID: sessionID,
+        sessionID: this.state.sessionID,
         instanceID: instanceID,
       })
     );

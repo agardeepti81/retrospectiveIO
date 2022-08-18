@@ -1,57 +1,32 @@
 import React, { Component } from "react";
 import "./PrivateNote.css";
 import Note from "../Note/Note";
-import Button from "@mui/material/Button";
+import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
+import { Tooltip } from "@mui/material";
 
 class PrivateNote extends Component {
   state = {
-    newNote: "", //In Internal Note
     allNotes: [],
-    isContentEditable: "false", //In internal note
-    fontSize: null, // In internal note
-  };
-
-  handleChange = (event) => {
-    this.setState({
-      note: event.currentTarget.textContent,
-    });
-    if (this.state.note.length == 140)
-      this.setState({
-        isContentEditable: "false",
-      });
-    if (this.state.note.length < 50)
-      this.setState({
-        fontSize: "medium",
-      });
-    else if (this.state.note.length > 50 && this.state.note.length < 100)
-      this.setState({
-        fontSize: "small",
-      });
-    else if (this.state.note.length > 100)
-      this.setState({
-        fontSize: "x-small",
-      });
-  };
-
-  deleteText = (event) => {
-    this.setState({
-      note: "",
-    });
   };
 
   addNote = (note) => {
     let notes = this.state.allNotes;
     notes.push(note);
     this.setState({
-      allNotes: notes
+      allNotes: notes,
     });
   };
 
-  deleteNote = (delnote) => {
+  editNote = (updatedNote, noteIndex) => {
     let updatedNotes = this.state.allNotes;
-    let deleteNoteIndex = this.state.allNotes.findIndex(
-      (note) => note == delnote
-    );
+    updatedNotes[noteIndex] = updatedNote;
+    this.setState({
+      allNotes: updatedNotes,
+    });
+  };
+
+  deleteNote = (deleteNoteIndex) => {
+    let updatedNotes = this.state.allNotes;
     if (deleteNoteIndex !== -1) {
       updatedNotes.splice(deleteNoteIndex, 1);
     }
@@ -60,57 +35,50 @@ class PrivateNote extends Component {
     });
   };
 
-  createFirstNote = () => {
-    let firstNote = "Enter text here";
-    let notes = this.state.allNotes;
-    notes.push(firstNote);
-    this.setState({
-      allNotes: notes,
-    });
-  };
-
-  editContent = () => {
-    this.setState({
-      isContentEditable: "true",
-    });
-  };
-
   render() {
     return (
       <div class="privateNote">
         <div className="publishAll">
-          <Button
-            variant="text"
-            onClick={() =>
-              this.state.allNotes.map((i) =>
-                this.props.sendNote(
-                  i,
-                  this.props.sessionID,
-                  this.props.instanceID
-                )
-              )
-            }
-          >
-            Publish All
-          </Button>
+          <Tooltip title="Send All" placement="bottom">
+            <KeyboardDoubleArrowUpIcon
+              variant="text"
+              onClick={() => {
+                this.state.allNotes.map((note) =>
+                  this.props.sendNote(note, this.props.instanceID)
+                );
+                this.setState({
+                  allNotes: []
+                })
+              }}
+            >
+              Publish All
+            </KeyboardDoubleArrowUpIcon>
+          </Tooltip>
         </div>
         <div className="notesSpace">
           {/* {this.state.allNotes.length == 0 ? this.createFirstNote() : <></>} */}
-          {this.state.allNotes.map((note) => (
+          {this.state.allNotes.map((note, i) => (
             <Note
               note={note}
-              deleteNote={this.deleteNote}
-              sendNote={this.props.sendNote}
-              sessionID={this.props.sessionID}
-              instanceID={this.props.instanceID}
-              addNote={this.addNote}
-              onChange={this.handleChange}
-              editContent={this.editContent}
-              isContentEditable={this.state.isContentEditable}
-              fontSize={this.state.fontSize}
+              type="privateNote"
+              sendNote={() => {
+                this.props.sendNote(note, this.props.instanceID);
+                this.deleteNote(i);
+              }}
+              deleteNote={() => this.deleteNote(i)}
+              editNote={(updatedNote) => this.editNote(updatedNote, i)}
+              // deleteNote={this.deleteNote}
+              // sendNote={this.props.sendNote}
+              // sessionID={this.props.sessionID}
+              // instanceID={this.props.instanceID}
+              // addNote={this.addNote}
+              // onChange={this.handleChange}
+              // editContent={this.editContent}
+              // isContentEditable={this.state.isContentEditable}
+              // fontSize={this.state.fontSize}
             />
           ))}
-          <Note type="newNote" addNote={this.addNote} />
+          <Note type="publicNote" addNote={this.addNote} />
         </div>
         {/* <div className="newNote">
           <TextField

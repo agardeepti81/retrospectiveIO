@@ -8,6 +8,7 @@
 
 .note .upperIcons{
   height: 10%;
+  text-align: right;
 }
 
 .note .text{
@@ -29,6 +30,11 @@
   border-radius: 50%;
   background: white;
   border: solid white 2px;
+  visibility: hidden;
+}
+
+.note:hover .noteIcons {
+  visibility: visible;
 }
 
 .lowerIcons .noteIcons {
@@ -36,67 +42,20 @@
   left: -12.5px;
 }
 
+.upperIcons .noteIcons {
+  position: relative;
+  right: -12.5px;
+  top: -12.5px;
+}
+
 #saveNoteIcon {
   color: green;
 }
 
-#cancelEditIcon {
+#cancelEditIcon, #deleteNoteIcon {
   color: #d10404;
 }
 
-.deleteNoteIcon {
-  font-size: 21px !important;
-  float: right;
-  position: relative;
-  top: -12.5px;
-  right: -37.5px;
-  color: #d10404;
-  background: white;
-  border-radius: 50%;
-  border: solid white 2px;
-}
-
-.editNoteIcon {
-  font-size: 21px !important;
-  float: left;
-  position: relative;
-  top: -1.5px;
-  right: 9.5px;
-  background: white;
-  border-radius: 50%;
-  border: solid white 2px;
-}
-
-.sendNoteIcon {
-  font-size: 21px !important;
-  float: right;
-  position: relative;
-  top: -14.5px;
-  right: 16.5px;
+#sendNoteIcon {
   color: blue;
-  background: white;
-  border-radius: 50%;
-  border: solid white 2px;
-}
-
-.senderName {
-  border: solid white 2px;
-  float: right;
-  position: relative;
-  right: -87.5px;
-  top: 87.5px;
-  background: white;
-  border-radius: 50%;
-  width: 21px;
-  height: 21px;
-  text-align: center;
-}
-
-.senderName:hover {
-  width: 120px;
-  border-radius: 10px;
-  right: -10px;
-  top: 62.5px;
-  text-align: left;
-  padding-left: 5px;
 }

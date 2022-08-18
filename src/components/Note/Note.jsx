@@ -10,7 +10,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 class Note extends Component {
   state = {
     editedNote: this.props.note ? this.props.note : "",
-    editable: false
+    editable: false,
+    sender: this.props.sender,
   };
 
   componentDidMount() {
@@ -37,8 +38,8 @@ class Note extends Component {
     } else if (this.props.type == "privateNote") {
       this.setState({
         editedNote: this.props.note,
-        editable: false
-      })
+        editable: false,
+      });
     }
   };
 
@@ -70,8 +71,10 @@ class Note extends Component {
     return (
       <div className="note">
         <div className="upperIcons">
-        {/* style={this.state.hover?{visibility: "visible"}:{visibility: "hidden"}} */}
-          {this.props.type == "newNote" || this.state.editable ? (
+          {/* style={this.state.hover?{visibility: "visible"}:{visibility: "hidden"}} */}
+          {this.props.type == "newNote" ||
+          this.props.type == "publicNote" ||
+          this.state.editable ? (
             <></>
           ) : (
             <IosShareIcon
@@ -80,7 +83,9 @@ class Note extends Component {
               onClick={this.props.sendNote}
             />
           )}
-          {this.props.type == "newNote" || this.state.editable ? (
+          {this.props.type == "newNote" ||
+          this.props.type == "publicNote" ||
+          this.state.editable ? (
             <></>
           ) : (
             <DeleteForeverIcon
@@ -91,26 +96,26 @@ class Note extends Component {
           )}
         </div>
         <div className="text">
-        <TextField
-          placeholder="Start writing your note"
-          multiline
-          InputProps={{
-            disableUnderline: true,
-            style: {
-              fontSize:
-                this.state.editedNote.length < 50
-                  ? "medium"
-                  : this.state.editedNote.length < 100
-                  ? "small"
-                  : "x-small",
-            },
-          }}
-          disabled={!this.state.editable} //!false --> disable=true, !true-->disable=false
-          variant="standard"
-          onChange={(e) => this.handleChange(e)}
-          value={this.state.editedNote}
-          onKeyDown={this.saveNoteOnEnter}
-        />
+          <TextField
+            placeholder="Start writing your note"
+            multiline
+            InputProps={{
+              disableUnderline: true,
+              style: {
+                fontSize:
+                  this.state.editedNote.length < 50
+                    ? "medium"
+                    : this.state.editedNote.length < 100
+                    ? "small"
+                    : "x-small",
+              },
+            }}
+            disabled={!this.state.editable} 
+            variant="standard"
+            onChange={(e) => this.handleChange(e)}
+            value={this.state.editedNote}
+            onKeyDown={this.saveNoteOnEnter}
+          />
         </div>
         <div className="lowerIcons">
           {this.state.editable ? (
@@ -136,6 +141,11 @@ class Note extends Component {
               className="noteIcons"
               onClick={this.setEditableTrue}
             />
+          ) : (
+            <></>
+          )}
+          {this.props.type == "publicNote" ? (
+            <div className="senderName">{this.state.sender}</div>
           ) : (
             <></>
           )}

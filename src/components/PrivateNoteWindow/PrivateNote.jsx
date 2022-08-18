@@ -47,8 +47,8 @@ class PrivateNote extends Component {
                   this.props.sendNote(note, this.props.instanceID)
                 );
                 this.setState({
-                  allNotes: []
-                })
+                  allNotes: [],
+                });
               }}
             >
               Publish All
@@ -56,7 +56,6 @@ class PrivateNote extends Component {
           </Tooltip>
         </div>
         <div className="notesSpace">
-          {/* {this.state.allNotes.length == 0 ? this.createFirstNote() : <></>} */}
           {this.state.allNotes.map((note, i) => (
             <Note
               note={note}
@@ -67,70 +66,10 @@ class PrivateNote extends Component {
               }}
               deleteNote={() => this.deleteNote(i)}
               editNote={(updatedNote) => this.editNote(updatedNote, i)}
-              // deleteNote={this.deleteNote}
-              // sendNote={this.props.sendNote}
-              // sessionID={this.props.sessionID}
-              // instanceID={this.props.instanceID}
-              // addNote={this.addNote}
-              // onChange={this.handleChange}
-              // editContent={this.editContent}
-              // isContentEditable={this.state.isContentEditable}
-              // fontSize={this.state.fontSize}
             />
           ))}
-          <Note type="publicNote" addNote={this.addNote} />
+          <Note type="newNote" addNote={this.addNote} />
         </div>
-        {/* <div className="newNote">
-          <TextField
-            id="outlined-multiline-flexible"
-            label="Private-Note"
-            multiline
-            maxRows={2}
-            sx={{ m: 2, width: "50ch" }}
-            value={this.state.note}
-            onChange={this.handleChange}
-          />
-          <Fab
-            size="small"
-            color="primary"
-            aria-label="add"
-            sx={{ m: 1 }}
-            onClick={this.addNote}
-          >
-            <AddIcon />
-          </Fab>
-          <Button 
-          variant="contained" 
-          endIcon={<SendIcon />} sx={{ m: 1 }} 
-          onClick={() => this.state.allNotes.map((i) => 
-             this.props.sendNote( i,this.props.sessionID,this.props.instanceID)
-          )} 
-          >
-            Send
-          </Button>
-        </div> */}
-        {/* <h4>Private Note</h4>
-        <textarea
-          id="comment"
-          name="notes"
-          rows="7"
-          cols="30"
-          onChange={this.handleChange}
-          value={this.state.note}
-        />
-        <br></br>
-        <button
-          onClick={() =>
-            this.props.sendNote(
-              this.state.note,
-              this.props.sessionID,
-              this.props.instanceID
-            )
-          }
-        >
-          Send
-        </button>
-        <button onClick={this.deleteText}>Clear</button> */}
       </div>
     );
   }

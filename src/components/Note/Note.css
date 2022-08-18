@@ -18,6 +18,7 @@
   margin-top: 0px !important;
   background-color: rgb(240, 198, 225);
   margin-left: 5%;
+  color:black;
 }
 
 
@@ -58,4 +59,20 @@
 
 #sendNoteIcon {
   color: blue;
+}
+
+.senderName{
+  width: 15px;
+  float: right;
+  position: relative;
+  top: -7px;
+  right: 1.5px;
+  overflow: hidden;
+  text-transform: capitalize;
+  border-radius: 10%;
+}
+
+.note:hover .senderName{
+  width: 70px;
+  overflow: visible;
 }

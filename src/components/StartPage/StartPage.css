@@ -13,33 +13,30 @@
   min-height: 80vh;
 }
 
-.ideatitle {
+.workingArea .ideatitle {
   text-shadow: 2px 10px 3px rgb(0, 153, 255);
   font-size: 45px;
   font-family: "Lucida Sans";
   font-style: oblique;
 }
 
-.session {
-  width: 93%;
+.workingArea .session {
   margin: 4vh;
   padding-top: 5px;
+  display: flex;
 }
 
-#startPage .name {
+.workingArea .name {
   margin-top: 3vh;
 }
 
-.newSession {
-  width: 43%;
-  float: left;
-  margin-left: 46px;
+.workingArea .session .newSession {
+  width: 50%;
   margin-top: 42px;
 }
 
-.existingSession {
+.workingArea .session .existingSession {
   width: 50%;
-  float: left;
   border-left: 3px solid black;
 }
 

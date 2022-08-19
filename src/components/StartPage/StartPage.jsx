@@ -22,6 +22,15 @@ class StartPage extends Component {
     });
   };
 
+  validateName = () =>{
+    if(!this.state.name)
+    alert("please enter your name");
+    else if(!this.state.meetingId)
+      this.props.onConnect(this.state.name, this.props.sessionID)
+    else 
+      this.props.onConnect(this.state.name, this.state.meetingId)
+  }
+
   render() {
     return (
       <div id="startPage">
@@ -40,7 +49,8 @@ class StartPage extends Component {
             <div className="newSession">
               <Button
                 variant="contained"
-                onClick={() => this.props.onConnect(this.state.name)}
+                onClick={this.validateName}
+                // () => this.props.onConnect(this.state.name, this.props.sessionID)
               >
                 Start new Session
               </Button>
@@ -59,9 +69,7 @@ class StartPage extends Component {
               <div className="joinSession">
                 <Button
                   variant="contained"
-                  onClick={() =>
-                    this.props.onConnect(this.state.name, this.state.meetingId)
-                  }
+                  onClick={this.validateName}
                 >
                   {" "}
                   Join session

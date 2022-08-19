@@ -166,6 +166,7 @@ class App extends Component {
                 newInstance={this.createNewInstance}
                 sendNote={this.sendNote}
                 deleteInstance={this.deleteInstance}
+                onConnectApp={this.onConnectApp}
               />
             }
           />

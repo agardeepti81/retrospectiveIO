@@ -9,6 +9,14 @@ import CloseIcon from "@mui/icons-material/Close";
 const SessionWindowRoute = (props) => {
   const params = useParams();
   const { sessionID } = params;
+  let name;
+  
+  if(sessionID && !props.members)
+  {
+    name = prompt("Enter Name", "");
+    if(name!=null)
+    props.onConnectApp(name,sessionID);
+  }
 
   return (
     <SessionWindow

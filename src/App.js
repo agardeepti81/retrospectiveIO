@@ -3,8 +3,23 @@ import { Routes, Route } from "react-router-dom";
 import React, { Component } from "react";
 import StartPage from "./components/StartPage/StartPage";
 import SessionWindowRoute from "./components/SessionWindow/SessionWindow";
+import PeopleIcon from "@mui/icons-material/People";
+import { Modal, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import MemberList from "./components/MemberList/MemberList";
 
 const URL = "ws://localhost:8080";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 class App extends Component {
   state = {
@@ -13,6 +28,7 @@ class App extends Component {
     instances: null,
     sessionID: null,
     createInstances: 0,
+    openmodal: true,
   };
 
   onSocketClose = () => {
@@ -62,8 +78,7 @@ class App extends Component {
           instances: data.instances,
           sessionID: data.sessionID,
         });
-        for(let i=0; i<this.state.createInstances; i++)
-        {
+        for (let i = 0; i < this.state.createInstances; i++) {
           this.createNewInstance(data.sessionID, "start");
         }
         break;
@@ -138,12 +153,33 @@ class App extends Component {
         sessionID: sessionID,
       })
     );
-  }
+  };
+
+  showMembers = () => {
+    alert("Members: "+Object.entries(this.state.members).map(i=>i[1]));
+    return (
+      Object.entries(this.state.members).map((i) => (
+        <div>
+          <MemberList/>
+          {/* <Modal open={this.state.openmodal}>
+            <Box sx={style}>
+              <Typography variant="h6" component="h2">{i[1]}</Typography>
+            </Box>
+          </Modal> */}
+        </div>
+      ))
+    );
+  };
+
   render() {
     return (
       <div className="App">
         <div className="navBar">
           <div className="title">Retrospective.io</div>
+          <div className="empty"></div>
+          <div className="members">
+            <PeopleIcon onClick={this.showMembers} />
+          </div>
         </div>
         <Routes>
           <Route

@@ -2,20 +2,73 @@ import React, { Component } from "react";
 import Instance from "../Instance/Instance";
 import { useParams } from "react-router-dom";
 import "./SessionWindow.css";
-import {Button, Fab, TextField} from "@mui/material";
+import { Button, Fab, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { useState } from "react";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { textAlign } from "@mui/system";
 
 const SessionWindowRoute = (props) => {
   const params = useParams();
   const { sessionID } = params;
-  let name;
-  
-  if(sessionID && !props.members)
-  {
-    name = prompt("Enter Name", "");
-    if(name!=null)
-    props.onConnectApp(name,sessionID);
+  const [name, setName] = useState("");
+  const [open, setOpen] = useState(true);
+  const [nameSubmit, setNameSubmit] = useState(false);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  function validateName() {
+    if(!name)
+    alert("please enter your name");
+    else 
+    props.onConnectApp(name, sessionID);
+  }
+
+
+  if (!props.members) {
+    return (
+      <div>
+        <Modal
+          open={open}
+        >
+          <Box sx={style}>
+            <h4 style={{textAlign: "left", marginBottom:10}}>Enter Name:</h4>
+            <TextField
+              id="outlined-required"
+              size="small"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+            />
+            <Button
+              onClick={() => {
+                validateName(name);
+                // props.onConnectApp(name, sessionID);
+                setNameSubmit(true);
+              }}
+            >
+              click
+            </Button>
+          </Box>
+        </Modal>
+        {/* {nameSubmit ? (
+          <div>loading...</div>
+        ) : (
+          <Button onClick={() => setOpen(true)}>Enter your name</Button>
+        )} */}
+      </div>
+    );
   }
 
   return (
@@ -106,7 +159,11 @@ class SessionWindow extends Component {
                   value={this.state.instanceName}
                   size="small"
                 />
-                <Button id="addInstance" variant="contained" onClick={this.createNewInstance}>
+                <Button
+                  id="addInstance"
+                  variant="contained"
+                  onClick={this.createNewInstance}
+                >
                   Add
                 </Button>
               </div>

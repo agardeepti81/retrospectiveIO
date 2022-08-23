@@ -8,6 +8,7 @@ class StartPage extends Component {
   state = {
     name: "",
     meetingId: "",
+    peopleIcon: false
   };
 
   handleChange = (event) => {
@@ -26,9 +27,9 @@ class StartPage extends Component {
     if(!this.state.name)
     alert("please enter your name");
     else if(!this.state.meetingId)
-      this.props.onConnect(this.state.name, this.props.sessionID)
+      this.props.onConnect(this.state.name, this.props.sessionID, this.state.peopleIcon)
     else 
-      this.props.onConnect(this.state.name, this.state.meetingId)
+      this.props.onConnect(this.state.name, this.state.meetingId, this.state.peopleIcon)
   }
 
   render() {

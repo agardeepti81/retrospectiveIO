@@ -6,7 +6,9 @@ import SessionWindowRoute from "./components/SessionWindow/SessionWindow";
 import PeopleIcon from "@mui/icons-material/People";
 import { Modal, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
-import MemberList from "./components/MemberList/MemberList";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 
 const URL = "ws://localhost:8080";
 const style = {
@@ -28,7 +30,8 @@ class App extends Component {
     instances: null,
     sessionID: null,
     createInstances: 0,
-    openmodal: true,
+    participantsWindow: false,
+    peopleIconVisible: true,
   };
 
   onSocketClose = () => {
@@ -42,7 +45,8 @@ class App extends Component {
     this.onConnect(username, sessionID);
   };
 
-  onConnect = (username, sessionID) => {
+  onConnect = (username, sessionID, peopleIcon) => {
+    this.setState({ peopleIconVisible: peopleIcon });
     this.state.socket = new WebSocket(URL);
     this.state.socket.addEventListener("open", () =>
       this.onSocketOpen(username, sessionID)
@@ -84,13 +88,13 @@ class App extends Component {
         break;
       case "newMember":
         let newMembers = this.state.members;
-        console.log(newMembers);
-        newMembers.push(data.memberInfo);
-        console.log(newMembers);
+        newMembers[Object.keys(data.memberInfo)[0]] = Object.values(
+          data.memberInfo
+        )[0];
         this.setState({
           members: newMembers,
         });
-        alert(`${data.memberInfo.name} has joined the session`);
+        alert(`${Object.values(data.memberInfo)[0]} has joined the session`);
         break;
 
       case "updatedInstancesData":
@@ -155,20 +159,11 @@ class App extends Component {
     );
   };
 
-  showMembers = () => {
-    alert("Members: "+Object.entries(this.state.members).map(i=>i[1]));
-    return (
-      Object.entries(this.state.members).map((i) => (
-        <div>
-          <MemberList/>
-          {/* <Modal open={this.state.openmodal}>
-            <Box sx={style}>
-              <Typography variant="h6" component="h2">{i[1]}</Typography>
-            </Box>
-          </Modal> */}
-        </div>
-      ))
-    );
+  tooggleParticipantWindow = (updatedState) => {
+    this.setState({
+      participantsWindow: updatedState,
+    });
+    console.log(Object.values(this.state.members).map((i) => i));
   };
 
   render() {
@@ -177,10 +172,34 @@ class App extends Component {
         <div className="navBar">
           <div className="title">Retrospective.io</div>
           <div className="empty"></div>
-          <div className="members">
-            <PeopleIcon onClick={this.showMembers} />
-          </div>
+          {!this.state.peopleIconVisible ? (
+            <div className="members">
+              <PeopleIcon onClick={() => this.tooggleParticipantWindow(true)} />
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
+        <Modal
+          open={this.state.participantsWindow}
+          onClose={() => this.tooggleParticipantWindow(false)}
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              <List>
+              {/* {Object.values(this.state.members).map((i) =>
+              (
+                <ListItem>
+                  <ListItemText>
+                    {i}
+                  </ListItemText>
+                </ListItem>
+              }
+               )} */}
+              </List>
+            </Typography>
+          </Box>
+        </Modal>
         <Routes>
           <Route
             exact

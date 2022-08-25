@@ -97,6 +97,7 @@ class Note extends Component {
         </div>
         <div className="text">
           <TextField
+          className="noteText"
             placeholder="Start writing your note"
             multiline
             InputProps={{
@@ -110,6 +111,7 @@ class Note extends Component {
                     : "x-small",
               },
             }}
+            
             disabled={!this.state.editable} 
             variant="standard"
             onChange={(e) => this.handleChange(e)}

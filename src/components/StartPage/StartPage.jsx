@@ -36,12 +36,13 @@ class StartPage extends Component {
     return (
       <div id="startPage">
         <div className="workingArea">
-          <div className="ideatitle">Let's share our ideas#@!!</div>
+          <div className="ideatitle">Create better future by learning from past!!</div>
           <div className="name">
             <TextField
               id="outlined-required"
-              label="Name"
+              label="Tell me your name"
               size="small"
+              sx={{width: '50ch' }}
               onChange={this.handleChange}
               value={this.state.name}
             />
@@ -56,6 +57,7 @@ class StartPage extends Component {
                 Start new Session
               </Button>
             </div>
+            <div></div>
             <div className="existingSession">
               <div className="sessionInput">
                 <TextField

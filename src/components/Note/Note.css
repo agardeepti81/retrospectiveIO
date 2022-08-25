@@ -1,7 +1,7 @@
 .note {
   width: 152px;
   height: 120px;
-  background-color: rgb(149, 243, 243);
+  background-color: #0000FF;
   margin: 15px 30px 15px 0px;
   border-radius: 10%;
 }
@@ -16,7 +16,7 @@
   border-radius: 10%;
   width: 90%;
   margin-top: 0px !important;
-  background-color: rgb(240, 198, 225);
+  background-color: #0000FF;
   margin-left: 5%;
   color:black;
 }
@@ -62,17 +62,28 @@
 }
 
 .senderName{
-  width: 15px;
-  float: right;
-  position: relative;
-  top: -7px;
-  right: 1.5px;
-  overflow: hidden;
-  text-transform: capitalize;
-  border-radius: 10%;
+    width: 12.5px;
+    height: 12.5px;
+    float: right;
+    position: relative;
+    top: -2.5px;
+    right: -0.5px;
+    overflow: hidden;
+    text-transform: capitalize;
+    border-radius: 50%;
+    background-color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 1px;
 }
 
 .note:hover .senderName{
   width: 70px;
   overflow: visible;
+  border-radius: 20%;
+}
+
+.note .Mui-disabled {
+  -webkit-text-fill-color: white !important;
+  opacity: 1 !important;
 }

@@ -9,6 +9,9 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import mainLogo from "./Reflexion.png";
+import sakhiLogo from "./sakhi_logo_tr.png";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 const URL = "ws://localhost:8080";
 const style = {
@@ -163,15 +166,26 @@ class App extends Component {
     this.setState({
       participantsWindow: updatedState,
     });
-    console.log(Object.values(this.state.members).map((i) => i));
   };
 
   render() {
     return (
       <div className="App">
         <div className="navBar">
-          <div className="title">Retrospective.io</div>
+          <div className="title">
+            <a href="http://sakhilearning.com/" target="_blank">
+              <img src={sakhiLogo} width={65} height={65} />
+            </a>
+            <img src={mainLogo} />
+          </div>
           <div className="empty"></div>
+          {!this.state.peopleIconVisible ? (
+            <div className="members">
+              <FileDownloadIcon />
+            </div>
+          ) : (
+            <></>
+          )}
           {!this.state.peopleIconVisible ? (
             <div className="members">
               <PeopleIcon onClick={() => this.tooggleParticipantWindow(true)} />
@@ -186,16 +200,20 @@ class App extends Component {
         >
           <Box sx={style}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              <List>
-              {/* {Object.values(this.state.members).map((i) =>
-              (
-                <ListItem>
-                  <ListItemText>
-                    {i}
-                  </ListItemText>
-                </ListItem>
-              }
-               )} */}
+              <List
+                sx={{
+                  width: "100%",
+                  maxWidth: 360,
+                  bgcolor: "background.paper",
+                }}
+              >
+                Member List:
+                {this.state.members &&
+                  Object.values(this.state.members).map((value) => (
+                    <ListItem key={value} disableGutters>
+                      <ListItemText primary={` ${value}`} />
+                    </ListItem>
+                  ))}
               </List>
             </Typography>
           </Box>

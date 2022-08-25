@@ -8,14 +8,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { textAlign } from "@mui/system";
 
 const SessionWindowRoute = (props) => {
   const params = useParams();
   const { sessionID } = params;
   const [name, setName] = useState("");
   const [open, setOpen] = useState(true);
-  const [nameSubmit, setNameSubmit] = useState(false);
+  // const [nameSubmit, setNameSubmit] = useState(false);
 
   const style = {
     position: "absolute",
@@ -52,21 +51,19 @@ const SessionWindowRoute = (props) => {
               value={name}
             />
             <Button
+              variant="contained"
+              sx={{
+                marginInline: 2
+              }}
               onClick={() => {
                 validateName(name);
-                // props.onConnectApp(name, sessionID);
-                setNameSubmit(true);
+                //setNameSubmit(true);
               }}
             >
-              click
+              Join Session
             </Button>
           </Box>
         </Modal>
-        {/* {nameSubmit ? (
-          <div>loading...</div>
-        ) : (
-          <Button onClick={() => setOpen(true)}>Enter your name</Button>
-        )} */}
       </div>
     );
   }

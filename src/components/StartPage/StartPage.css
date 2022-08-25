@@ -37,7 +37,7 @@
 
 .workingArea .session .existingSession {
   width: 50%;
-  border-left: 3px solid black;
+  /* border-left: 3px solid black; */
 }
 
 

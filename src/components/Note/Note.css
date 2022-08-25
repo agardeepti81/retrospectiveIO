@@ -1,7 +1,7 @@
 .note {
   width: 152px;
   height: 120px;
-  background-color: #0000FF;
+  background-color:  #2069f1;
   margin: 15px 30px 15px 0px;
   border-radius: 10%;
 }
@@ -16,7 +16,7 @@
   border-radius: 10%;
   width: 90%;
   margin-top: 0px !important;
-  background-color: #0000FF;
+  background-color: #2069f1;
   margin-left: 5%;
   color:black;
 }

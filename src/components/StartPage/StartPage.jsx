@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { TextField, Button } from "@mui/material";
 import "./StartPage.css";
 import image from "./mainPage.png";
+import orImage from "./orImage.png";
 
 class StartPage extends Component {
   state = {
@@ -57,7 +58,7 @@ class StartPage extends Component {
                 Start new Session
               </Button>
             </div>
-            <div></div>
+            <div><img src={orImage} /></div>
             <div className="existingSession">
               <div className="sessionInput">
                 <TextField

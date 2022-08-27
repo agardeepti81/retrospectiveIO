@@ -87,3 +87,8 @@
   -webkit-text-fill-color: white !important;
   opacity: 1 !important;
 }
+
+.note .MuiInput-input {
+  color: white !important;
+  opacity: 1 !important;
+}

@@ -1,5 +1,5 @@
 .publicNote .notesSpace{
-    height: 92%;
+    height: 100%;
     width: 100%;
     overflow-y: scroll;
     display: flex;
@@ -7,16 +7,3 @@
     justify-content: center;
  
 }
-
-h4{
-    margin: 0px;
-    text-align: center;
-}
-/* .publicNote .notesSpace .note{
-    width: 152;
-    height: 100;
-    background:"yellow";
-    color:"red";
-    margin: 2;
-  
-} */

@@ -168,6 +168,16 @@ class App extends Component {
     });
   };
 
+  createPDf = (id) => {
+    console.log(this.state.instances);
+    this.state.socket?.send(
+      JSON.stringify({
+        action: "createPDF",
+        sessionID: id,
+      })
+    );
+  }
+
   render() {
     return (
       <div className="App">
@@ -181,14 +191,14 @@ class App extends Component {
           <div className="empty"></div>
           {!this.state.peopleIconVisible ? (
             <div className="members">
-              <FileDownloadIcon />
+              <FileDownloadIcon sx={{color: "white"}} onClick={() => this.createPDf(this.state.sessionID)}/>
             </div>
           ) : (
             <></>
           )}
           {!this.state.peopleIconVisible ? (
             <div className="members">
-              <PeopleIcon onClick={() => this.tooggleParticipantWindow(true)} />
+              <PeopleIcon sx={{color: "white"}} onClick={() => this.tooggleParticipantWindow(true)} />
             </div>
           ) : (
             <></>

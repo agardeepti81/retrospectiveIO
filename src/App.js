@@ -71,8 +71,13 @@ class App extends Component {
   };
 
   onSocketMessage = (dataStr) => {
+    if (typeof dataStr !== "string") {
+      let pdfBlob = new Blob([dataStr], { type: "application/pdf" });
+      let url = window.webkitURL.createObjectURL(pdfBlob);
+      window.open(url);
+      return;
+    }
     const data = JSON.parse(dataStr);
-    console.log(data);
     switch (data?.type) {
       case "wrongSessionID":
         alert(
@@ -125,6 +130,23 @@ class App extends Component {
         });
         break;
 
+      // case "pdfCreated":
+      //   console.log(data.pdfStream);
+      //   const stream = new pdfStream(data.pdfStream);
+
+      //   const fileURL = window.URL.createObjectURL(stream);
+      //   // Setting various property values
+      //   let alink = document.createElement("a");
+      //   alink.href = fileURL;
+      //   alink.download = "SamplePDF.pdf";
+      //   alink.click();
+
+      //   let pdfBlob = new Blob([data.pdfStream], { type: "application/pdf" });
+      //   let url = window.webkitURL.createObjectURL(pdfBlob);
+      //   window.open(url);
+
+      //   break;
+
       default:
         console.log(data);
     }
@@ -176,7 +198,7 @@ class App extends Component {
         sessionID: id,
       })
     );
-  }
+  };
 
   render() {
     return (
@@ -191,14 +213,20 @@ class App extends Component {
           <div className="empty"></div>
           {!this.state.peopleIconVisible ? (
             <div className="members">
-              <FileDownloadIcon sx={{color: "white"}} onClick={() => this.createPDf(this.state.sessionID)}/>
+              <FileDownloadIcon
+                sx={{ color: "white" }}
+                onClick={() => this.createPDf(this.state.sessionID)}
+              />
             </div>
           ) : (
             <></>
           )}
           {!this.state.peopleIconVisible ? (
             <div className="members">
-              <PeopleIcon sx={{color: "white"}} onClick={() => this.tooggleParticipantWindow(true)} />
+              <PeopleIcon
+                sx={{ color: "white" }}
+                onClick={() => this.tooggleParticipantWindow(true)}
+              />
             </div>
           ) : (
             <></>

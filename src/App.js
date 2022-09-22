@@ -41,11 +41,11 @@ class App extends Component {
     alert("Session ended. You can connect again");
   };
 
-  onConnectApp = (username, sessionID) => {
+  onConnectApp = (username, sessionID, peopleIcon) => {
     if (!sessionID) {
       this.setState({ createInstances: 1 });
     }
-    this.onConnect(username, sessionID);
+    this.onConnect(username, sessionID, peopleIcon);
   };
 
   onConnect = (username, sessionID, peopleIcon) => {

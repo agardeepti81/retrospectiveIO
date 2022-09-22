@@ -32,12 +32,16 @@ class StartPage extends Component {
         this.props.sessionID,
         this.state.peopleIcon
       );
+  };
+
+  validateNameandMeeting = () => {
+    if (!this.state.name) alert("please enter your name");
     else
-      this.props.onConnect(
-        this.state.name,
-        this.state.meetingId,
-        this.state.peopleIcon
-      );
+    this.props.onConnect(
+      this.state.name,
+      this.state.meetingId,
+      this.state.peopleIcon
+    );
   };
 
   render() {
@@ -70,7 +74,7 @@ class StartPage extends Component {
                 />
               </div>
               <div className="joinSession">
-                <Button variant="contained" sx={{ width: "25ch" }} onClick={this.validateName}>
+                <Button variant="contained" sx={{ width: "25ch" }} onClick={this.validateNameandMeeting}>
                   {" "}
                   Join session
                 </Button>
@@ -83,7 +87,6 @@ class StartPage extends Component {
               <Button
                 variant="contained"
                 onClick={this.validateName}
-                // () => this.props.onConnect(this.state.name, this.props.sessionID)
               >
                 Start new Session
               </Button>

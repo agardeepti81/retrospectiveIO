@@ -208,7 +208,7 @@ class App extends Component {
             <a href="http://sakhilearning.com/" target="_blank">
               <img src={sakhiLogo} width={65} height={65} />
             </a>
-            <img src={mainLogo} />
+            <img src={mainLogo} alt={"Sakhi Learning Logo"}/>
           </div>
           <div className="empty"></div>
           {!this.state.peopleIconVisible ? (
@@ -243,6 +243,7 @@ class App extends Component {
                   width: "100%",
                   maxWidth: 360,
                   bgcolor: "background.paper",
+                  textTransform: "capitalize"
                 }}
               >
                 Member List:

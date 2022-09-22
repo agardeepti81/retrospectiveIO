@@ -36,6 +36,7 @@ class StartPage extends Component {
 
   validateNameandMeeting = () => {
     if (!this.state.name) alert("please enter your name");
+    else if(!this.state.meetingId) alert("please enter meetingID");
     else
     this.props.onConnect(
       this.state.name,
